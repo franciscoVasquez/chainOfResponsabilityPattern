@@ -19,25 +19,12 @@ namespace responsibilityPattern
             // The client should be able to send a request to any handler, not
             // just the first one in the chain.
             monkey.SetNext(squirrel).SetNext(dog);
-            object result = null;
+            if (animals == null) return stringBuilder.ToString();
             foreach (var animal in animals)
             {
-                if (!animal.Equals(null))
-                {
-                    Console.WriteLine($"Client: Who wants a {animal.Food}?");
-                    stringBuilder.Append($"Client: Who wants a {animal.Food}?");
-                    result = monkey.Handle(animal);
-
-                }
-                if (result == null)
-                {
-                    stringBuilder.Append($"   {animal.Food} was left untouched."); 
-                    Console.WriteLine($"   {animal.Food} was left untouched.");
-                    break;    
-                }
-                stringBuilder.Append($"   {result}");
-                Console.Write($"   {result}");
-                
+                stringBuilder.Append($"Client: Who wants a {animal.Food}?");
+                var result = monkey.Handle(animal);
+                stringBuilder.Append(result == null ? $"   {animal.Food} was left untouched.\n" : $"   {result}");
             }
 
             return stringBuilder.ToString();

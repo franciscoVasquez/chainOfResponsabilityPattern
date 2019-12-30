@@ -12,22 +12,22 @@ namespace responsibilityPattern
         {
             Console.WriteLine("Chain: Squirrel > Monkey > Cat\n");
             GetAnimals();
-            AnimalClient.Processor(GetAnimals());
-
-            Console.WriteLine("Subchain: Squirrel > Dog\n");
+            var chainOut = AnimalClient.Processor(GetAnimals());
+            Console.WriteLine(chainOut);
+            Console.WriteLine("\n");
             Console.ReadKey();
         }
 
         private static List<Animal> GetAnimals()
         {
             //It's possible define any quantity of animals in the chain. 
-
             var animals = new List<Animal>
             {
                 new Animal {Food = "Nut", Specie = "Squirrel"},
-                new Animal {Food = "Banana", Specie = "Monkey"},
-                new Animal {Food = "Milk", Specie = "Cat"}
+                new Animal {Food = "Milk", Specie = "Cat"},
+                new Animal {Food = "Banana", Specie = "Monkey"}
             };
+
 
             return animals;
         }

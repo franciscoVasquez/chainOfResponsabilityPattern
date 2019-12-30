@@ -17,7 +17,7 @@ namespace xUnitResponsabilityPattern
         private readonly string _expected = string.Join("\n", 
             "Client: Who wants a Nut?   Squirrel: I'll eat the Nut.",
             "Client: Who wants a Banana?   Monkey: I'll eat the Banana.",
-            "Client: Who wants a Milk?   Milk was left untouched.");
+            "Client: Who wants a Milk?   Milk was left untouched.\n");
         private readonly ValuesController _controller;
 
         public ResponsabilityPatternShouldProcess()
@@ -27,44 +27,70 @@ namespace xUnitResponsabilityPattern
         [Fact]
         public void ProcessAnimalsReturnEmpty()
         {
-            Assert.Equal(string.Empty, AnimalClient.Processor(new List<Animal>()));
+            //Act
+            var result = AnimalClient.Processor(new List<Animal>());
+            //Assert
+            Assert.Equal(string.Empty, result);
         }
 
         [Fact]
+        public void ProcessAnimalsPassNullValueReturnStringEmpty()
+        {
+            //Act
+            var result = AnimalClient.Processor((null));
+            //Assert
+            Assert.Equal(string.Empty, result);
+        }
+        [Fact]
         public void ProcessAnimalsReturnExpected()
         {
+            //Arrange
             var animals = new List<Animal>
             {
                 new Animal {Food = "Nut", Specie = "Squirrel"},
                 new Animal {Food = "Banana", Specie = "Monkey"},
                 new Animal {Food = "Milk", Specie = "Cat"}
             };
-            Assert.Equal(this._expected, AnimalClient.Processor((animals)));
+            //Act 
+            var result = AnimalClient.Processor((animals));
+            //Assert 
+            Assert.Equal(this._expected, result);
         }
 
         [Fact]
         public void DogHandlerReturnExpected()
         {
+            //Arrange
             var dogHandler = new DogHandler();
             const string expected = "Dog: I'll eat the MeatBall.\n";
-            Assert.Equal(expected, dogHandler.Handle(new Animal {Food = "MeatBall", Specie = "Dog"}).ToString());
+            //Act 
+            var result = dogHandler.Handle(new Animal {Food = "MeatBall", Specie = "Dog"}).ToString();
+            //Assert
+            Assert.Equal(expected, result);
         }
         
         [Fact]
         public void MonkeyHandlerReturnExpected()
         {
+            //Arrange
             var monkeyHandler = new MonkeyHandler();
             const string expected = "Monkey: I'll eat the BANANA.\n";
-            Assert.Equal(expected, monkeyHandler.Handle(new Animal {Food = "BANANA", Specie = "Monkey"}).ToString());
+            //Act
+            var result = monkeyHandler.Handle(new Animal {Food = "BANANA", Specie = "Monkey"}).ToString();
+            //Assert
+            Assert.Equal(expected, result);
         }
         
         [Fact]
         public void SquirrelHandlerReturnExpected()
         {
+            //Arrange
             var squirrelHandler = new SquirrelHandler();
             const string expected = "Squirrel: I'll eat the NUT.\n";
-            // Act and Assert
-            Assert.Equal(expected, squirrelHandler.Handle(new Animal {Food = "NUT", Specie = "Squirrel"}).ToString());
+            // Act
+            var result = squirrelHandler.Handle(new Animal {Food = "NUT", Specie = "Squirrel"}).ToString();
+            // Assert
+            Assert.Equal(expected, result);
         }
 
         [Fact]
@@ -120,21 +146,21 @@ namespace xUnitResponsabilityPattern
         [Fact]
         public void ConsumeDelete_ReturnNoContentResult()
         {
-            //arrange
+            //Arrange
             var random = new Random();
-            //act
+            //Act
             var noContentResult = _controller.Delete(random.Next());
-            //assert
+            //Assert
             Assert.IsType<NoContentResult>(noContentResult);
         }
         [Fact]
         public void ConsumePut_ReturnNoContentResult()
         {
-            //arrange
+            //Arrange
             var random = new Random();
-            //act
+            //Act
             var noContentResult = _controller.Put(random.Next(), _expected);
-            //assert
+            //Assert
             Assert.IsType<NoContentResult>(noContentResult);
         }
     }

@@ -20,7 +20,7 @@ namespace responsibilityPattern
 
         private static List<Animal> GetAnimals()
         {
-            //It's possible define any quatity of animals in the chain. 
+            //It's possible define any quantity of animals in the chain. 
 
             var animals = new List<Animal>
             {

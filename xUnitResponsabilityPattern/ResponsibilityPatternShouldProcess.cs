@@ -8,22 +8,31 @@ using starting_guy.Controllers;
 using startingTestconsoleApp.Models;
 using startingTestconsoleApp.Validators;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace xUnitResponsabilityPattern
 {
     public class ResponsabilityPatternShouldProcess
     {
-        
+        private readonly ITestOutputHelper _output;
         private readonly string _expected = string.Join("\n", 
             "Client: Who wants a Nut?   Squirrel: I'll eat the Nut.",
             "Client: Who wants a Banana?   Monkey: I'll eat the Banana.",
             "Client: Who wants a Milk?   Milk was left untouched.\n");
         private readonly ValuesController _controller;
-
-        public ResponsabilityPatternShouldProcess()
+        private readonly List<Animal> _animalList; 
+        public ResponsabilityPatternShouldProcess(ITestOutputHelper output)
         {
+            _animalList = new List<Animal>
+            {
+                new Animal {Food = "Nut", Specie = "Squirrel"},
+                new Animal {Food = "Banana", Specie = "Monkey"},
+                new Animal {Food = "Milk", Specie = "Cat"}
+            };
+            _output = output;
             _controller = new ValuesController();
         }
+
         [Fact]
         public void ProcessAnimalsReturnEmpty()
         {
@@ -44,15 +53,8 @@ namespace xUnitResponsabilityPattern
         [Fact]
         public void ProcessAnimalsReturnExpected()
         {
-            //Arrange
-            var animals = new List<Animal>
-            {
-                new Animal {Food = "Nut", Specie = "Squirrel"},
-                new Animal {Food = "Banana", Specie = "Monkey"},
-                new Animal {Food = "Milk", Specie = "Cat"}
-            };
             //Act 
-            var result = AnimalClient.Processor((animals));
+            var result = AnimalClient.Processor((_animalList));
             //Assert 
             Assert.Equal(this._expected, result);
         }
@@ -94,6 +96,7 @@ namespace xUnitResponsabilityPattern
         }
 
         [Fact]
+        [Trait("Category", "Api")]
         public void Get_WhenCall_ReturnOkResult()
         {
             // Act
@@ -104,6 +107,7 @@ namespace xUnitResponsabilityPattern
         }
 
         [Fact]
+        [Trait("Category", "Api")]
         public void GetById_ReturnsOkResult()
         {
             // Arrange
@@ -115,7 +119,8 @@ namespace xUnitResponsabilityPattern
             Assert.IsType<OkObjectResult>(okResult.Result);
         }
         [Fact]
-        public void ConsumeProcessor_InvalidObjectPassed_ReturnsBadRequest()
+        [Trait("Category", "Api")]
+        public void ConsumePost_InvalidObjectPassed_ReturnsBadRequest()
         {
             // Act
             var badResponse = _controller.Post(null);
@@ -125,16 +130,13 @@ namespace xUnitResponsabilityPattern
         }
         
         [Fact]
-        public void ConsumeProcessor_ValidObjectPassed_ReturnsOkResult()
+        [Trait("Category", "Api")]
+        public void ConsumePost_ValidObjectPassed_ReturnsOkResult()
         {
             // Arrange
-            var animals = new List<Animal>
-            {
-                new Animal {Food = "Nut", Specie = "Squirrel"},
-                new Animal {Food = "Banana", Specie = "Monkey"},
-                new Animal {Food = "Milk", Specie = "Cat"}
-            };
-            var valueAnimal = JsonConvert.SerializeObject(animals);
+            _output.WriteLine("Creating a list of animals...");
+            var valueAnimal = JsonConvert.SerializeObject(_animalList);
+            
             // Act
             var okResult = _controller.Post(valueAnimal);
  
@@ -144,6 +146,7 @@ namespace xUnitResponsabilityPattern
         }
 
         [Fact]
+        [Trait("Category", "Api")]
         public void ConsumeDelete_ReturnNoContentResult()
         {
             //Arrange
@@ -154,6 +157,7 @@ namespace xUnitResponsabilityPattern
             Assert.IsType<NoContentResult>(noContentResult);
         }
         [Fact]
+        [Trait("Category", "Api")]
         public void ConsumePut_ReturnNoContentResult()
         {
             //Arrange

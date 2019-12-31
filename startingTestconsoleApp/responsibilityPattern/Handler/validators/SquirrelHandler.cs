@@ -7,7 +7,7 @@ namespace responsibilityPattrn.Handler.validators
     {
         public override object Handle(Animal animal)
         {
-            return animal.Food != null && animal.Food.ToUpperInvariant().Equals("NUT")
+            return animal.Food?.ToUpperInvariant().Equals("NUT") ?? false
                 ? $"{animal.Specie}: I'll eat the {animal.Food}.\n"
                 : base.Handle(animal);
         }

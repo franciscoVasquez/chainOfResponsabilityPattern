@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using responsibilityPattern;
 using startingTestconsoleApp.Models;
 
-namespace xUnitResponsabilityPattern.TestDataGenerator
+namespace xUnitResponsabilityPattern.TestData
 {
     [ExcludeFromCodeCoverage]
-    public class TestDataGenerator : IEnumerable<object[]>
+    public class ProcessorAnimalTestData : IEnumerable<object[]>
     {
         private readonly string _expected = string.Join("\n", 
             "Client: Who wants a Nut?   Squirrel: I'll eat the Nut.",
@@ -27,9 +26,9 @@ namespace xUnitResponsabilityPattern.TestDataGenerator
             {
                 new List<Animal>
                 {
-                    new Animal {Food = "Nut", Specie = "Squirrel"},
+                    new Animal {Food = "Nut",Specie = "Squirrel"},
                     new Animal {Food = "Banana", Specie = "Monkey"},
-                    new Animal {Food = "Milk", Specie = "Cat"}
+                    new Animal {Food = "Milk", Specie = "Camel"}
                 },
                 _expected
             };

@@ -9,6 +9,7 @@ using startingTestconsoleApp.Models;
 using startingTestconsoleApp.Validators;
 using Xunit;
 using Xunit.Abstractions;
+using xUnitResponsabilityPattern.TestData;
 
 namespace xUnitResponsabilityPattern
 {
@@ -34,8 +35,9 @@ namespace xUnitResponsabilityPattern
         }
 
         [Theory]
-        [ClassData(typeof(TestDataGenerator.TestDataGenerator))]
-        public void ProcessAnimalsReturnEmpty(List<Animal> animal, string expected)
+        [Trait("Category", "Processor")]
+        [ClassData(typeof(ProcessorAnimalTestData))]
+        public void ProcessAnimals(List<Animal> animal, string expected)
         {
             //Act
             var result = AnimalClient.Processor(animal);
@@ -44,6 +46,7 @@ namespace xUnitResponsabilityPattern
         }
 
         [Fact]
+        [Trait("Category", "Handler")]
         public void DogHandlerReturnExpected()
         {
             //Arrange
@@ -56,6 +59,7 @@ namespace xUnitResponsabilityPattern
         }
         
         [Fact]
+        [Trait("Category", "Handler")]
         public void MonkeyHandlerReturnExpected()
         {
             //Arrange
@@ -68,6 +72,7 @@ namespace xUnitResponsabilityPattern
         }
         
         [Fact]
+        [Trait("Category", "Handler")]
         public void SquirrelHandlerReturnExpected()
         {
             //Arrange

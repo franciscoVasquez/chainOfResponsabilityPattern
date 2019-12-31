@@ -21,4 +21,8 @@
       <ProjectReference Include="..\startingTestconsoleApp\responsibilityPattern\responsibilityPattern.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="TestData" />
+    </ItemGroup>
+
 </Project>

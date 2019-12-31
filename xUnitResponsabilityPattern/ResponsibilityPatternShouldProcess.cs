@@ -33,30 +33,14 @@ namespace xUnitResponsabilityPattern
             _controller = new ValuesController();
         }
 
-        [Fact]
-        public void ProcessAnimalsReturnEmpty()
+        [Theory]
+        [ClassData(typeof(TestDataGenerator.TestDataGenerator))]
+        public void ProcessAnimalsReturnEmpty(List<Animal> animal, string expected)
         {
             //Act
-            var result = AnimalClient.Processor(new List<Animal>());
+            var result = AnimalClient.Processor(animal);
             //Assert
-            Assert.Equal(string.Empty, result);
-        }
-
-        [Fact]
-        public void ProcessAnimalsPassNullValueReturnStringEmpty()
-        {
-            //Act
-            var result = AnimalClient.Processor((null));
-            //Assert
-            Assert.Equal(string.Empty, result);
-        }
-        [Fact]
-        public void ProcessAnimalsReturnExpected()
-        {
-            //Act 
-            var result = AnimalClient.Processor((_animalList));
-            //Assert 
-            Assert.Equal(this._expected, result);
+            Assert.Equal(expected, result);
         }
 
         [Fact]

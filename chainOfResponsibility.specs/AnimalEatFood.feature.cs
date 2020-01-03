@@ -81,13 +81,16 @@ namespace chainOfResponsibility.specs
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="The Monkey will eat when I pass Banana")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Feeding Animals")]
         [Xunit.TraitAttribute("FeatureTitle", "AnimalEatFood")]
-        [Xunit.TraitAttribute("Description", "The Monkey will eat when I pass Banana")]
-        public virtual void TheMonkeyWillEatWhenIPassBanana()
+        [Xunit.TraitAttribute("Description", "Feeding Animals")]
+        [Xunit.InlineDataAttribute("Banana", "Monkey", new string[0])]
+        [Xunit.InlineDataAttribute("MeatBall", "Dog", new string[0])]
+        [Xunit.InlineDataAttribute("Nut", "Squirrel", new string[0])]
+        public virtual void FeedingAnimals(string food, string animal, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The Monkey will eat when I pass Banana", null, ((string[])(null)));
+            string[] tagsOfScenario = exampleTags;
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Feeding Animals", null, exampleTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -112,23 +115,25 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I\'m a Zoo Worker", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.When("I throw a Banana", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("I throw a {0}", food), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
- testRunner.Then("the animal who picked the food should be Monkey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("the animal who picked the food should be {0}", animal), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="The Dog will eat when I pass MeatBall")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Bag of food")]
         [Xunit.TraitAttribute("FeatureTitle", "AnimalEatFood")]
-        [Xunit.TraitAttribute("Description", "The Dog will eat when I pass MeatBall")]
-        public virtual void TheDogWillEatWhenIPassMeatBall()
+        [Xunit.TraitAttribute("Description", "Bag of food")]
+        [Xunit.InlineDataAttribute("Client: Who wants a Nut? Squirrel: I\'ll eat the Nut. Client: Who wants a Banana? " +
+            "Monkey: I\'ll eat the Banana.\nClient: Who wants a Milk? Milk was left untouched.", new string[0])]
+        public virtual void BagOfFood(string response, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The Dog will eat when I pass MeatBall", null, ((string[])(null)));
-#line 12
+            string[] tagsOfScenario = exampleTags;
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Bag of food", null, exampleTags);
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -148,27 +153,41 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 13
- testRunner.Given("I\'m a Zoo Worker", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 14
- testRunner.When("I throw a MeatBall", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 15
- testRunner.Then("the animal who picked the food should be Dog", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="The Squirrel will eat when I pass Nut")]
-        [Xunit.TraitAttribute("FeatureTitle", "AnimalEatFood")]
-        [Xunit.TraitAttribute("Description", "The Squirrel will eat when I pass Nut")]
-        public virtual void TheSquirrelWillEatWhenIPassNut()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The Squirrel will eat when I pass Nut", null, ((string[])(null)));
 #line 18
+ testRunner.Given("I\'m a Zoo Worker", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "food",
+                            "specie"});
+                table1.AddRow(new string[] {
+                            "Nut",
+                            "Squirrel"});
+                table1.AddRow(new string[] {
+                            "Banana",
+                            "Monkey"});
+                table1.AddRow(new string[] {
+                            "Milk",
+                            "Camel"});
+#line 19
+ testRunner.When("I throw a Bag with the following Foods", ((string)(null)), table1, "When ");
+#line hidden
+#line 24
+ testRunner.Then(string.Format("the response should be correct  {0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="Bag of food missing Banana")]
+        [Xunit.TraitAttribute("FeatureTitle", "AnimalEatFood")]
+        [Xunit.TraitAttribute("Description", "Bag of food missing Banana")]
+        [Xunit.InlineDataAttribute("Client: Who wants a Nut? Squirrel: I\'ll eat the Nut. Client: Who wants a Banana? " +
+            "Monkey: I\'ll eat the Banana.\nClient: Who wants a Milk? Milk was left untouched.", new string[0])]
+        public virtual void BagOfFoodMissingBanana(string response, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Bag of food missing Banana", null, exampleTags);
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -188,14 +207,26 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 19
+#line 31
  testRunner.Given("I\'m a Zoo Worker", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 20
- testRunner.When("I throw a Nut", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "food",
+                            "specie"});
+                table2.AddRow(new string[] {
+                            "Nut",
+                            "Squirrel"});
+                table2.AddRow(new string[] {
+                            "null",
+                            "Monkey"});
+                table2.AddRow(new string[] {
+                            "Milk",
+                            "Camel"});
+#line 32
+ testRunner.When("I throw a Bag with the following Foods", ((string)(null)), table2, "When ");
 #line hidden
-#line 21
- testRunner.Then("the animal who picked the food should be Squirrel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 37
+ testRunner.Then(string.Format("the response should be correct {0}", response), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

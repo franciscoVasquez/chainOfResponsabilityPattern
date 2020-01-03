@@ -3,19 +3,39 @@
 	As a Zoo Worker 
 	I want to know which animal eat what food
 
-Scenario: The Monkey will eat when I pass Banana
+Scenario Outline: Feeding Animals
 	Given I'm a Zoo Worker
-	When I throw a Banana
-	Then the animal who picked the food should be Monkey
+	When I throw a <food>
+	Then the animal who picked the food should be <animal>
 
+	Examples: 
+	| food     | animal   |
+	| Banana   | Monkey   |
+	| MeatBall | Dog      |
+	| Nut      | Squirrel |
 
-Scenario: The Dog will eat when I pass MeatBall
+Scenario Outline: Bag of food 
 	Given I'm a Zoo Worker
-	When I throw a MeatBall
-	Then the animal who picked the food should be Dog
+	When I throw a Bag with the following Foods
+	| food     | specie   |
+	| Nut      | Squirrel |
+	| Banana   | Monkey   |
+	| Milk     | Camel    |
+	Then the response should be correct <response>
 
-	
-Scenario: The Squirrel will eat when I pass Nut
+	Examples: 
+	| response																																							|
+	| Client: Who wants a Nut? Squirrel: I'll eat the Nut. Client: Who wants a Banana? Monkey: I'll eat the Banana.\nClient: Who wants a Milk? Milk was left untouched. | 
+
+Scenario Outline: Bag of food missing Banana
 	Given I'm a Zoo Worker
-	When I throw a Nut
-	Then the animal who picked the food should be Squirrel
+	When I throw a Bag with the following Foods
+	| food     | specie   |
+	| Nut      | Squirrel |
+	| null     | Monkey   |
+	| Milk     | Camel    |
+	Then the response should be correct <response>
+
+	Examples: 
+	| response																																							|
+	| Client: Who wants a Nut? Squirrel: I'll eat the Nut. Client: Who wants a Banana? Monkey: I'll eat the Banana.\nClient: Who wants a Milk? Milk was left untouched. | 

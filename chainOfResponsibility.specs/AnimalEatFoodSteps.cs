@@ -1,51 +1,54 @@
-﻿using System;
-using responsibilityPattern;
-using responsibilityPattrn.Handler.validators;
+﻿using responsibilityPattern;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using startingTestconsoleApp.Models;
-using startingTestconsoleApp.Validators;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using Xunit;
 
 namespace chainOfResponsibility.specs
 {
     [Binding]
+    [ExcludeFromCodeCoverage]
     public class AnimalEatFoodSteps
     {
-        private Animal _animal;
-        private MonkeyHandler _monkeyHandler;
-        private SquirrelHandler _squirrelHandler;
-        private DogHandler _dogHandler;
+        private readonly AnimalEatFoodStepsContext _context;
+
+        public AnimalEatFoodSteps(AnimalEatFoodStepsContext animalEatFoodStepsContext)
+        {
+            _context = animalEatFoodStepsContext;
+        }
+        
 
         [Given(@"I'm a Zoo Worker")]
         public void GivenImaZooWorker()
         {
-            _animal = new Animal();
+            //class animal is declared via constructor
         }
 
         [When(@"I throw a (.*)")]
         public void WhenIThrowFood(string p0)
         {
-            _animal.Food = p0;
+            _context._animal.Food = p0;
         }
 
         [Then(@"the animal who picked the food should be (.*)")]
         public void ThenTheCorrectAnimalWillEatTheFood(string p0)
         {
-            _animal.Specie = p0;
+            _context._animal.Specie = p0;
 
             switch (p0)
             {
                 case "Dog":
-                    _dogHandler = new DogHandler();
-                    Assert.Equal($"{p0}: I'll eat the {_animal.Food}.\n", _dogHandler.Handle(_animal));
+                    Assert.Equal($"{p0}: I'll eat the {_context._animal.Food}.\n", _context._dogHandler.Handle(_context._animal));
                     break;
                 case "Monkey":
-                    _monkeyHandler = new MonkeyHandler(); ;
-                    Assert.Equal($"{p0}: I'll eat the {_animal.Food}.\n", _monkeyHandler.Handle(_animal));
+                    Assert.Equal($"{p0}: I'll eat the {_context._animal.Food}.\n", _context._monkeyHandler.Handle(_context._animal));
                     break;
                 case "Squirrel":
-                    _squirrelHandler = new SquirrelHandler();
-                    Assert.Equal($"{p0}: I'll eat the {_animal.Food}.\n", _squirrelHandler.Handle(_animal));
+                    Assert.Equal($"{p0}: I'll eat the {_context._animal.Food}.\n", _context._squirrelHandler.Handle(_context._animal));
                     break;
                 default:
                     Console.WriteLine("Default case");
@@ -53,6 +56,17 @@ namespace chainOfResponsibility.specs
             }
 
         }
+        
+        [When(@"I throw a Bag with the following Foods")]
+        public void WhenIThrowABagWithTheFollowingFoods(Table table)
+        {
+            _context._animals = table.CreateSet<Animal>();
+        }
 
+        [Then(@"the response should be correct (.*)")]
+        public void ThenTheResponseShouldBeCorrect(string result)
+        {
+            Assert.Equal(result, AnimalClient.Processor(_context._animals));
+        }
     }
 }

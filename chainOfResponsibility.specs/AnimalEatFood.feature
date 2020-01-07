@@ -25,7 +25,7 @@ Scenario Outline: Bag of food
 
 	Examples: 
 	| response |
-	| Client: Who wants a Nut | 
+	| Client: Who wants a Nut?   Squirrel: I'll eat the Nut.Client: Who wants a Banana?   Monkey: I'll eat the Banana.Client: Who wants a Milk?   Milk was left untouched. | 
 
 Scenario Outline: Bag of food missing Banana
 	Given I'm a Zoo Worker
@@ -38,4 +38,4 @@ Scenario Outline: Bag of food missing Banana
 
 	Examples: 
 	| response |
-	| Client:  | 
+	| Client: Who wants a Nut?   Squirrel: I'll eat the Nut.Client: Who wants a null?   null was left untouched.Client: Who wants a Milk?   Milk was left untouched.| 

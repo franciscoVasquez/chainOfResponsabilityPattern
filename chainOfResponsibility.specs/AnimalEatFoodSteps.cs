@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.RegularExpressions;
 using startingTestconsoleApp.Models;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -66,8 +67,8 @@ namespace chainOfResponsibility.specs
         [Then(@"the response should be correct (.*)")]
         public void ThenTheResponseShouldBeCorrect(string result)
         {
-            var res = AnimalClient.Processor(_context._animals);
-            Assert.Equal(result, AnimalClient.Processor(_context._animals));
+            var res = Regex.Replace(AnimalClient.Processor(_context._animals), @"\t|\n|\r", "");
+            Assert.Equal(result, res);
         }
     }
 }

@@ -127,7 +127,9 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableTheoryAttribute(DisplayName="Bag of food")]
         [Xunit.TraitAttribute("FeatureTitle", "AnimalEatFood")]
         [Xunit.TraitAttribute("Description", "Bag of food")]
-        [Xunit.InlineDataAttribute("Client: Who wants a Nut", new string[0])]
+        [Xunit.InlineDataAttribute("Client: Who wants a Nut?   Squirrel: I\'ll eat the Nut.Client: Who wants a Banana?" +
+            "   Monkey: I\'ll eat the Banana.Client: Who wants a Milk?   Milk was left untouch" +
+            "ed.", new string[0])]
         public virtual void BagOfFood(string response, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -180,7 +182,8 @@ this.ScenarioInitialize(scenarioInfo);
         [Xunit.SkippableTheoryAttribute(DisplayName="Bag of food missing Banana")]
         [Xunit.TraitAttribute("FeatureTitle", "AnimalEatFood")]
         [Xunit.TraitAttribute("Description", "Bag of food missing Banana")]
-        [Xunit.InlineDataAttribute("Client:", new string[0])]
+        [Xunit.InlineDataAttribute("Client: Who wants a Nut?   Squirrel: I\'ll eat the Nut.Client: Who wants a null?  " +
+            " null was left untouched.Client: Who wants a Milk?   Milk was left untouched.", new string[0])]
         public virtual void BagOfFoodMissingBanana(string response, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

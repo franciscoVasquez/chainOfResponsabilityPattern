@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using responsibilityPattrn.Handler.validators;
 using startingTestconsoleApp.Models;
@@ -7,6 +8,7 @@ using startingTestconsoleApp.Validators;
 
 namespace chainOfResponsibility.specs
 {
+    [ExcludeFromCodeCoverage]
     public class AnimalEatFoodStepsContext
     {
         private static readonly string _expected = string.Join("\n",

@@ -24,8 +24,8 @@ Scenario Outline: Bag of food
 	Then the response should be correct <response>
 
 	Examples: 
-	| response																																							|
-	| Client: Who wants a Nut? Squirrel: I'll eat the Nut. Client: Who wants a Banana? Monkey: I'll eat the Banana.\nClient: Who wants a Milk? Milk was left untouched. | 
+	| response |
+	| Client: Who wants a Nut | 
 
 Scenario Outline: Bag of food missing Banana
 	Given I'm a Zoo Worker
@@ -37,5 +37,5 @@ Scenario Outline: Bag of food missing Banana
 	Then the response should be correct <response>
 
 	Examples: 
-	| response																																							|
-	| Client: Who wants a Nut? Squirrel: I'll eat the Nut. Client: Who wants a Banana? Monkey: I'll eat the Banana.\nClient: Who wants a Milk? Milk was left untouched. | 
+	| response |
+	| Client:  | 

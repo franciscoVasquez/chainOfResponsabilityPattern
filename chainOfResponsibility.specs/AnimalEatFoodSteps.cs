@@ -66,6 +66,7 @@ namespace chainOfResponsibility.specs
         [Then(@"the response should be correct (.*)")]
         public void ThenTheResponseShouldBeCorrect(string result)
         {
+            var res = AnimalClient.Processor(_context._animals);
             Assert.Equal(result, AnimalClient.Processor(_context._animals));
         }
     }

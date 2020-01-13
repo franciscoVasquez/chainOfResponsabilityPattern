@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace EFbusinessCore
+namespace EFBusinessCore
 {
     public interface IDataRepository<TEntity>
     {

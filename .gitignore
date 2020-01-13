@@ -35,3 +35,9 @@ msbuild.wrn
 
 # Visual Studio 2017
 .vs/
+/xUnitResponsabilityPattern/*.cache
+/xUnitResponsabilityPattern/*.targets
+/xUnitResponsabilityPattern/*.props
+/business-project/*.db
+/business-project/*.db-shm
+/business-project/*.db-wal

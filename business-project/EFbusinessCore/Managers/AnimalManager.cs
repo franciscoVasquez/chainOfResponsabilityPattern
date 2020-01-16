@@ -31,7 +31,7 @@ namespace EFBusinessCore.Managers
             await _animalContext.SaveChangesAsync();
         }
 
-        public async Task Update(Animal currentVersion, Animal newVersion)
+        public async Task Update(Animal newVersion, Animal currentVersion)
         {
             currentVersion.Food = newVersion.Food;
             currentVersion.Specie = newVersion.Specie;

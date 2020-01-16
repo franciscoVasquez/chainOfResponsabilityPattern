@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using EFBusinessCore;
+using entityAnimal = EFBusinessCore.Model;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Newtonsoft.Json;
 using responsibilityPattern;
+using responsibilityPattern.Handler.validators;
 using responsibilityPattrn.Handler.validators;
+using responsibilityPattern.Models;
 using starting_guy.Controllers;
-using startingTestconsoleApp.Models;
-using startingTestconsoleApp.Validators;
 using Xunit;
 using Xunit.Abstractions;
 using xUnitResponsabilityPattern.TestData;
@@ -16,12 +20,13 @@ namespace xUnitResponsabilityPattern
     public class ResponsabilityPatternShouldProcess
     {
         private readonly ITestOutputHelper _output;
+        private readonly Mock<IDataRepository<entityAnimal.Animal>> _mockRepo;
         private readonly string _expected = string.Join("\n", 
             "Client: Who wants a Nut?   Squirrel: I'll eat the Nut.",
             "Client: Who wants a Banana?   Monkey: I'll eat the Banana.",
             "Client: Who wants a Milk?   Milk was left untouched.\n");
-        private readonly ValuesController _controller;
-        private readonly List<Animal> _animalList; 
+        private readonly AnimalController _controller;
+        private readonly List<Animal> _animalList;
         public ResponsabilityPatternShouldProcess(ITestOutputHelper output)
         {
             _animalList = new List<Animal>
@@ -31,7 +36,8 @@ namespace xUnitResponsabilityPattern
                 new Animal {Food = "Milk", Specie = "Cat"}
             };
             _output = output;
-            _controller = new ValuesController();
+            _mockRepo = new Mock<IDataRepository<entityAnimal.Animal>>();
+            _controller = new AnimalController(_mockRepo.Object);
         }
 
         [Theory]
@@ -86,13 +92,14 @@ namespace xUnitResponsabilityPattern
 
         [Fact]
         [Trait("Category", "Api")]
-        public void Get_WhenCall_ReturnOkResult()
+        public async Task Get_WhenCall_ReturnOkResult()
         {
             // Act
-            var okResult = _controller.Get();
+            var result = await _controller.Get();
  
             // Assert
-            Assert.IsType<OkObjectResult>(okResult.Result);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+           // await Assert.IsType<Task<OkObjectResult>>(okResult);
         }
 
         [Fact]
@@ -151,8 +158,9 @@ namespace xUnitResponsabilityPattern
         {
             //Arrange
             var random = new Random();
+            var entityExpected = JsonConvert.DeserializeObject<entityAnimal.Animal>(_expected);
             //Act
-            var noContentResult = _controller.Put(random.Next(), _expected);
+            var noContentResult = _controller.Put(random.Next(), entityExpected);
             //Assert
             Assert.IsType<NoContentResult>(noContentResult);
         }

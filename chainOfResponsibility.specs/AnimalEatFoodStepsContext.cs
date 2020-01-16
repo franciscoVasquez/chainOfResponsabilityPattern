@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
+using responsibilityPattern.Handler.validators;
+using responsibilityPattern.Models;
 using responsibilityPattrn.Handler.validators;
-using startingTestconsoleApp.Models;
-using startingTestconsoleApp.Validators;
 
 namespace chainOfResponsibility.specs
 {

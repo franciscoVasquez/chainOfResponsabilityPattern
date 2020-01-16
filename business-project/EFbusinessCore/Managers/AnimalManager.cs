@@ -1,33 +1,47 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using  EFBusinessCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFBusinessCore.Managers
 {
     public class AnimalManager: IDataRepository<Animal>
     {
-        public IEnumerable<Animal> GetAll()
+        private readonly AnimalContext _animalContext;
+
+        public AnimalManager(AnimalContext animalContext)
         {
-            throw new System.NotImplementedException();
+            _animalContext = animalContext;
         }
 
-        public Animal Get(long id)
+        public async Task<IEnumerable<Animal>> GetAll()
         {
-            throw new System.NotImplementedException();
+            return await _animalContext.Animals.ToListAsync();
         }
 
-        public void Add(Animal entity)
+        public async Task<Animal> Get(long id)
         {
-            throw new System.NotImplementedException();
+            return await _animalContext.Animals
+                .FirstOrDefaultAsync(a => a.AnimalId == id);
         }
 
-        public void Update(Animal dbEntity, Animal entity)
+        public async Task Add(Animal entity)
         {
-            throw new System.NotImplementedException();
+            _animalContext.Animals.Add(entity);
+            await _animalContext.SaveChangesAsync();
         }
 
-        public void Delete(Animal entity)
+        public async Task Update(Animal currentVersion, Animal newVersion)
         {
-            throw new System.NotImplementedException();
+            currentVersion.Food = newVersion.Food;
+            currentVersion.Specie = newVersion.Specie;
+            await _animalContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(Animal entity)
+        {
+            _animalContext.Remove(entity);
+            await _animalContext.SaveChangesAsync();
         }
     }
 }

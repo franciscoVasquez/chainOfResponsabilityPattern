@@ -1,7 +1,7 @@
+using responsibilityPattern.Models;
 using startingTestconsoleApp.Handler;
-using startingTestconsoleApp.Models;
 
-namespace responsibilityPattrn.Handler.validators
+namespace responsibilityPattern.Handler.validators
 {
     public class SquirrelHandler: AbstractHandler<Animal>
     {

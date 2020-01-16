@@ -1,13 +1,18 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
+using EFBusinessCore;
+using EFBusinessCore.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EFBusinessCore.Model;
+using AnimalCore = EFBusinessCore.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using starting_guy.Extension;
+using Animal = responsibilityPattern.Models.Animal;
 
 namespace starting_guy
 {
@@ -25,8 +30,13 @@ namespace starting_guy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddDbContext<AnimalContext>
+            services.AddDbContext<AnimalCore.AnimalContext>
                 (options => options.UseSqlite(Configuration["ConnectionString:ResponsabilityChainDB"]));
+            services.AddControllers();
+            services.TryAddScoped<IDataRepository<AnimalCore.Animal>, AnimalManager>();
+            services.ConfigureCors();
+            services.ConfigureIISIntegration();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +50,12 @@ namespace starting_guy
             {
                 app.UseHsts();
             }
-
+            app.UseRouting();
             app.UseHttpsRedirection();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

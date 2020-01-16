@@ -1,10 +1,8 @@
 ﻿using responsibilityPattern;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text.RegularExpressions;
-using startingTestconsoleApp.Models;
+using responsibilityPattern.Models;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Xunit;

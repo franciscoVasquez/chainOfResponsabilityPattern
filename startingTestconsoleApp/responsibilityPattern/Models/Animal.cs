@@ -1,4 +1,4 @@
-namespace startingTestconsoleApp.Models
+namespace responsibilityPattern.Models
 {
     public class Animal 
     {

@@ -1,7 +1,7 @@
+using responsibilityPattern.Models;
 using startingTestconsoleApp.Handler;
-using startingTestconsoleApp.Models;
 
-namespace startingTestconsoleApp.Validators
+namespace responsibilityPattern.Handler.validators
 {
     public class MonkeyHandler: AbstractHandler<Animal>
     {

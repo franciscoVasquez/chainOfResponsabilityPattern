@@ -1,7 +1,7 @@
 ﻿using System;
-using startingTestconsoleApp.Models;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using responsibilityPattern.Models;
 
 namespace responsibilityPattern
 {
